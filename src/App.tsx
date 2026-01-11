@@ -1,8 +1,8 @@
 
 import React, { useState, useRef } from 'react';
-import Header from './components/Header.tsx';
+import Header from './components/Header';
 import DetectionOverlay from './components/DetectionOverlay';
-import StatsPanel from './components/StatsPanel.tsx';
+import StatsPanel from './components/StatsPanel';
 import { analyzeImage, resolveLocation } from './services/geminiService';
 import { generatePDFReport } from './services/reportService';
 import { AppState } from './types';
