@@ -4,7 +4,7 @@ import { DetectionResult, LocationData } from "../types";
 import { MODEL_NAME, SYSTEM_PROMPT } from "../constants";
 
 export const analyzeImage = async (base64Image: string): Promise<DetectionResult> => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
   const data = base64Image.split(',')[1] || base64Image;
 
   try {
@@ -61,7 +61,7 @@ export const analyzeImage = async (base64Image: string): Promise<DetectionResult
 };
 
 export const resolveLocation = async (query: string): Promise<LocationData> => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ apiKey:  import.meta.env.VITE_GEMINI_API_KEY });
   
   try {
     // Switching to gemini-3-flash-preview for location resolution to ensure structured JSON output
