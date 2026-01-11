@@ -3,8 +3,19 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { DetectionResult, LocationData } from "../types";
 import { MODEL_NAME, SYSTEM_PROMPT } from "../constants";
 
-export const analyzeImage = async (base64Image: string): Promise<DetectionResult> => {
-  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+export const analyzeImage = async (base64Image: string): Promise<DetectionResult> => 
+export async function generateText(prompt: string) {
+  const res = await fetch('/api/gemini', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ prompt })
+  });
+  if (!res.ok) {
+    throw new Error(`Server error: ${res.status}`);
+  }
+  return res.json();
+}
+
   const data = base64Image.split(',')[1] || base64Image;
 
   try {
@@ -61,7 +72,18 @@ export const analyzeImage = async (base64Image: string): Promise<DetectionResult
 };
 
 export const resolveLocation = async (query: string): Promise<LocationData> => {
-  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+export async function generateText(prompt: string) {
+  const res = await fetch('/api/gemini', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ prompt })
+  });
+  if (!res.ok) {
+    throw new Error(`Server error: ${res.status}`);
+  }
+  return res.json();
+}
+
   
   try {
     // Switching to gemini-3-flash-preview for location resolution to ensure structured JSON output
