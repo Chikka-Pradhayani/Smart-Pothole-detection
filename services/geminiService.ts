@@ -3,16 +3,31 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { DetectionResult, LocationData } from "../types";
 import { MODEL_NAME, SYSTEM_PROMPT } from "../constants";
 
-export const analyzeImage = async (base64Image: string): Promise<DetectionResult> => 
+export const analyzeImage = async (base64Image: string): Promise<DetectionResult> => {
+  const res = await fetch('/api/gemini', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ image: base64Image })
+  });
+
+  if (!res.ok) {
+    throw new Error(`Server error: ${res.status}`);
+  }
+
+  return res.json();
+};
+
 export async function generateText(prompt: string) {
   const res = await fetch('/api/gemini', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ prompt })
   });
+
   if (!res.ok) {
     throw new Error(`Server error: ${res.status}`);
   }
+
   return res.json();
 }
 
