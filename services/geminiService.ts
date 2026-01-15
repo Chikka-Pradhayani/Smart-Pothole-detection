@@ -1,13 +1,19 @@
 
+// src/services/geminiService.ts
+
 import { GoogleGenAI, Type } from "@google/genai";
 import { DetectionResult, LocationData } from "../types";
 import { MODEL_NAME, SYSTEM_PROMPT } from "../constants";
 
+// Function to analyze an image
 export const analyzeImage = async (base64Image: string): Promise<DetectionResult> => {
+  // Extract the base64 data if input includes prefix
+  const data = base64Image.split(',')[1] || base64Image;
+
   const res = await fetch('/api/gemini', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ image: base64Image })
+    body: JSON.stringify({ image: data })
   });
 
   if (!res.ok) {
@@ -17,6 +23,7 @@ export const analyzeImage = async (base64Image: string): Promise<DetectionResult
   return res.json();
 };
 
+// Function to generate text using Gemini API
 export async function generateText(prompt: string) {
   const res = await fetch('/api/gemini', {
     method: 'POST',
@@ -30,8 +37,6 @@ export async function generateText(prompt: string) {
 
   return res.json();
 }
-
-  const data = base64Image.split(',')[1] || base64Image;
 
   try {
     const response = await ai.models.generateContent({
